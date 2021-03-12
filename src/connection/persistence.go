@@ -1,6 +1,6 @@
 package connection
 
-func insert(lines *fileLines) {
+func insert(lines *FileLines) {
 
 }
 

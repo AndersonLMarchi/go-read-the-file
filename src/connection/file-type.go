@@ -1,14 +1,16 @@
 package connection
 
-type fileLines []*fileType
+// FileLines append any FileType
+type FileLines []*FileType
 
-type fileType struct {
-	cpf                string
-	private            bool
-	incompleto         bool
-	dataUltimaCompra   string
-	compraTicketMedio  float64
-	ticketUltimaCompra float64
-	cnpjLojaFrequente  string
-	cnpjUltimaLoja     string
+// FileType from imported archive
+type FileType struct {
+	Cpf                string
+	Private            bool
+	Incompleto         bool
+	DataUltimaCompra   string
+	CompraTicketMedio  float64
+	TicketUltimaCompra float64
+	CnpjLojaFrequente  string
+	CnpjUltimaLoja     string
 }
