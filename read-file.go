@@ -2,14 +2,16 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 
-	validator "./src/utils"
+	connection "go-reader/src/connection"
+	validator "go-reader/src/utils"
 )
 
+var fileLines connection.FileLines
 var next bool
 
 func main() {
@@ -68,16 +70,40 @@ func splitLine(line string) []string {
 
 func printLineResult(line []string) {
 
-	fmt.Println("================================================================================")
 	if validator.IsCPF(line[0]) {
-		fmt.Println("CPF:", line[0])
-		fmt.Println("PRIVATE:", line[1])
-		fmt.Println("INCOMPLETO:", line[2])
-		fmt.Println("DATA ULTIMA COMPRA:", line[3])
-		fmt.Println("COMPRA TICKET MEDIO:", line[4])
-		fmt.Println("TICKET DA ULTIMA COMPRA:", line[5])
-		fmt.Println("LOJA MAIS FREQUENTE:", line[6])
-		fmt.Println("LOJA DA ULTIMA COMPRA:", line[7])
+		insertLine(line)
+		/*
+			fmt.Println("==========================================================")
+			fmt.Println("CPF:", line[0])
+			fmt.Println("PRIVATE:", line[1])
+			fmt.Println("INCOMPLETO:", line[2])
+			fmt.Println("DATA ULTIMA COMPRA:", line[3])
+			fmt.Println("COMPRA TICKET MEDIO:", line[4])
+			fmt.Println("TICKET DA ULTIMA COMPRA:", line[5])
+			fmt.Println("LOJA MAIS FREQUENTE:", line[6])
+			fmt.Println("LOJA DA ULTIMA COMPRA:", line[7])
+			fmt.Println("")
+		*/
 	}
-	fmt.Println("")
+}
+
+func insertLine(line []string) {
+
+	private, _ := strconv.ParseBool(line[1])
+	incompleto, _ := strconv.ParseBool(line[2])
+	ticketMedio, _ := strconv.ParseFloat(line[4], 64)
+	ticketUltimaCompra, _ := strconv.ParseFloat(line[5], 64)
+
+	fileLine := connection.FileType{}
+	fileLine.Cpf = line[0]
+	fileLine.Private = private
+	fileLine.Incompleto = incompleto
+	fileLine.DataUltimaCompra = line[3]
+	fileLine.CompraTicketMedio = ticketMedio
+	fileLine.TicketUltimaCompra = ticketUltimaCompra
+	fileLine.CnpjLojaFrequente = line[6]
+	fileLine.CnpjUltimaLoja = line[7]
+
+	fileLines = append(fileLines, &fileLine)
+
 }
