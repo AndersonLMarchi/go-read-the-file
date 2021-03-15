@@ -1,31 +1,41 @@
-Serviço de manipulação de dados e persistência em base de dados relacional
+# GO-READ-THE-FILE
 
-Requisitos:
+O GO-READ-THE-FILE é um sistema responsavel pela leitura de um arquivo texto (.txt) com seguinte estrutura:
 
-- Criar um serviço em GO que receba um arquivo csv/txt de entrada (Arquivo Anexo) OK
-- Este serviço deve persistir no banco de dados relacional (postgresql) todos os dados contidos no arquivo.
-- Deve-se fazer o split dos dados em colunas no banco de dados. Obs: pode ser feito diretamente no serviço em GO ou em sql
+```go
+type FileType struct {
+	Cpf                string
+	Private            bool
+	Incompleto         bool
+	DataUltimaCompra   string
+	CompraTicketMedio  float64
+	TicketUltimaCompra float64
+	CnpjLojaFrequente  string
+	CnpjUltimaLoja     string
+}
+```
 
-- Realizar higienização dos dados após persistência (sem acento, maiúsculo, etc)
-- Validar os CPFs/CNPJs contidos (válidos e não válidos numericamente)
-- Todo o código deve estar disponível em repositório público do GIT
+Os programas irão ler, linha por linha, o arquivo e separar cada informação no seu respectivo campo da estrutura de FileType. Após a leitura é carregado os dados em uma lista de FileType e acionado os programas de persistência dos dados no Postgresql.
 
+## Estrutura do projeto
+- Pastas:
+    - repository -> local para armazenamento dos arquivos texto para leitura
+    - src/connection -> local para armazenamento dos arquivos do pacote de Connexão com o banco de dados
+    - src/utils -> local para armazenamento de arquivos com funções úteis ao projeto
 
-Desejável:
-- Utilização das linguagen GOLANG para o desenvolvimento do serviço
-- Utilização do DB Postgres
+- Arquivos:
+    - .env -> arquivo com a definição das variáveis de ambiente para conexão com o postgresql
+    - docker-compose.yml -> arquivo com a definição do conteiner contendo as imagens e dependências que serão  usadas em nosso projeto
+    - Dockerfile -> conjunto de instruções para execução do projeto pelo docker
+    - go.mod e go.sum -> arquivos para definição do pacote principal da aplicação e as dependências de terceiros - usadas em nosso projeto
+    - read-file.go -> arquivo principal contendo a função de execução main(). Nele está toda a lógica de processamento do arquivo para persistência
 
-- Docker Compose, com orientações para executar (arquivo readme) 
+## Pre-requisitos
+Necessário ter o [docker](https://www.docker.com/products/docker-desktop) instalado e configurado na máquina
 
-Você será avaliado por:
-- Utilização de melhores práticas de desenvolvimento (nomenclatura, funções, classes, etc);
-- Utilização dos recursos mais recentes das linguagens;
-- Boa organização lógica e documental (readme, comentários, etc);
-- Cobertura de todos os requisitos obrigatórios.
+## Execução
+O projeto está configurado para executar apenas com o seguinte comando
 
-Nota:
-Todo a estrutura relacional deve estar documentada (criação das tabelas, etc)
-Criação de um arquivo README com as instruções de instalação juntamente com as etapas necessárias para configuração.
-Você pode escolher sua abordagem de arquitetura e solução técnica.
-Apresentar-nos apenas o link do Github com o projeto.
-
+```bash
+docker-compose up
+```
