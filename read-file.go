@@ -59,8 +59,8 @@ func main() {
 
 func readFile() *bufio.Scanner {
 	// Open file and create scanner on top of it
-	// file, err := os.Open("./repository/base_teste.txt") // complete file
-	file, err := os.Open("./repository/base_teste_short.txt") //short file version for test
+	// file, err := os.Open("./repository/base_teste_short.txt") //short file version for test
+	file, err := os.Open("./repository/base_teste.txt") // complete file
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -71,8 +71,8 @@ func readFile() *bufio.Scanner {
 
 func insertLine(line []string) {
 
-	// validates if CPF field on file is valid from database persistence
-	if validator.IsCPF(line[0]) {
+	// validates if CPF/CNPJ fields on file is valid from database persistence
+	if validator.IsCPF(line[0]) && validator.IsCNPJ(line[6]) && validator.IsCNPJ(line[7]) {
 
 		// convert strings fields
 		private, _ := strconv.ParseBool(line[1])
