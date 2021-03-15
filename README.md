@@ -29,5 +29,3 @@ Criação de um arquivo README com as instruções de instalação juntamente co
 Você pode escolher sua abordagem de arquitetura e solução técnica.
 Apresentar-nos apenas o link do Github com o projeto.
 
-Libs:
- -> Go get github.com/lib/pq
